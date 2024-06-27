@@ -1,7 +1,6 @@
 created: 20240627184102354
-modified: 20240627184104840
+modified: 20240627185102482
 title: $:/DefaultTiddlers
 type: text/vnd.tiddlywiki
 
-Test
-$:/plugins/Modern.TiddlyDev/doc $:/plugins/your-name/plugin-name
+Test $:/plugins/gltzeba/date-picker $:/plugins/Modern.TiddlyDev/doc $:/plugins/your-name/plugin-name
