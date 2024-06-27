@@ -1,5 +1,6 @@
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { IChangedTiddlers } from 'tiddlywiki';
+import flatpickr from './flatpickr.min.js';
 
 class DatePickerWidget extends Widget {
   refresh(_changedTiddlers: IChangedTiddlers) {
@@ -12,6 +13,13 @@ class DatePickerWidget extends Widget {
     this.execute();
     const containerElement = $tw.utils.domMaker('span', {
       text: 'date picker',
+    });
+    flatpickr(containerElement, {
+      enableTime: true,
+      dateFormat: 'Y-m-d H:i',
+      onClose: (selectedDates: Date[], dateStr: string, instance: any) => {
+        console.log(dateStr)
+      }
     });
     parent.insertBefore(containerElement, nextSibling);
     this.domNodes.push(containerElement);
@@ -29,6 +37,6 @@ class DatePickerWidget extends Widget {
 // For example, the Widget entry name could be My-Widget, and the source and source.meta file names could be index.ts and index.ts.meta, but the final Widget name could be RandomNumber, and the widget would be called with <$RandomNumber/>.
 // If a .meta is added to a script file it will be treated as an entry file.
 declare let exports: {
-    DatePicker: typeof DatePickerWidget;
+  DatePicker: typeof DatePickerWidget;
 };
 exports.DatePicker = DatePickerWidget;
