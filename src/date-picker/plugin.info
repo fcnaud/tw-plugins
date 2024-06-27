@@ -1,0 +1,9 @@
+{
+  "title": "$:/plugins/gltzeba/date-picker",
+  "name": "date-picker",
+  "author": "gltzeba",
+  "description": "date picker",
+  "plugin-type": "plugin",
+  "version": "0.0.1",
+  "list": "readme"
+}
