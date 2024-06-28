@@ -3,6 +3,9 @@ import { IChangedTiddlers } from 'tiddlywiki';
 import flatpickr from './flatpickr.min.js';
 
 class DatePickerWidget extends Widget {
+
+  showContent : string = "date picker";
+
   refresh(_changedTiddlers: IChangedTiddlers) {
     return false;
   }
@@ -12,13 +15,15 @@ class DatePickerWidget extends Widget {
     this.computeAttributes();
     this.execute();
     const containerElement = $tw.utils.domMaker('span', {
-      text: 'date picker',
+      text: this.showContent,
     });
     flatpickr(containerElement, {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
-      onClose: (selectedDates: Date[], dateStr: string, instance: any) => {
-        console.log(dateStr)
+      onChange: (selectedDates: Date[], dateStr: string, instance: any) => {
+        console.log(dateStr);
+        this.showContent = dateStr;
+        this.refreshSelf();
       }
     });
     parent.insertBefore(containerElement, nextSibling);
