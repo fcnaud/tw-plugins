@@ -4,3 +4,17 @@ type: text/vnd.tiddlywiki
 ! date-picker
 
 date picker
+
+! Todo
+
+* [ ] 添加一个日历icon
+* [ ] 显示 format
+* [ ] 是否可以选择时间
+
+! Dependencies
+
+This plugin relies on the following libraries:
+
+* [Flatpickr](https://flatpickr.js.org/): A lightweight and powerful datetime picker. v4.6.13
+* ~~[date-fns](https://date-fns.org/): A modern JavaScript date utility library. v3.6.0~~
+* [luxon](https://moment.github.io/luxon/): A library for working with dates and times in JavaScript. v1.27.0

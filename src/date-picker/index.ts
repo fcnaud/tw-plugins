@@ -1,12 +1,13 @@
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { IChangedTiddlers, IParseTreeNode, IWidgetInitialiseOptions, Tiddler } from 'tiddlywiki';
 import flatpickr from './flatpickr.min.js';
+import { DateTime } from './luxon.min.js';
 
 class DatePickerWidget extends Widget {
   id: string = "";
   currentTiddler: Tiddler | undefined;
   content: string = "";
-  date: Date = new Date();
+  dateTime: DateTime = DateTime.now();
 
   execute() {
     if (this.attributes) {
@@ -26,16 +27,17 @@ class DatePickerWidget extends Widget {
     }
 
     if (!this.currentTiddler.hasField(this.id)) {
-      $tw.wiki.addTiddler(new $tw.Tiddler(this.currentTiddler.fields, { [this.id]: new Date(Date.now()).toString() }));
+      $tw.wiki.addTiddler(new $tw.Tiddler(this.currentTiddler.fields, { [this.id]: DateTime.now().toString() }));
     }
 
-    this.date = new Date(this.currentTiddler?.getFieldString(this.id) || "");
-    if (isNaN(this.date.getTime())) {
-      this.content = "错误的时间格式";
+    this.dateTime = DateTime.fromISO(this.currentTiddler?.getFieldString(this.id));
+
+    if (!this.dateTime.isValid) {
+      this.content = "无效日期";
       return undefined;
     }
 
-    this.content = this.date.toString();
+    this.content = this.dateTime.toFormat("yyyy年MM月dd日");
   }
 
 
@@ -53,11 +55,11 @@ class DatePickerWidget extends Widget {
     flatpickr(containerElement, {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
-      defaultDate: this.date,
+      defaultDate: this.dateTime.toJSDate(),
       onChange: (selectedDates: Date[], dateStr: string, instance: any) => {
         console.log(dateStr, selectedDates[0].toString());
         if (this.currentTiddler) {
-          $tw.wiki.addTiddler(new $tw.Tiddler(this.currentTiddler.fields, { [this.id]: selectedDates[0].toString() }));
+          $tw.wiki.addTiddler(new $tw.Tiddler(this.currentTiddler.fields, { [this.id]: DateTime.fromJSDate(selectedDates[0]).toISO() }));
         }
       }
     });
