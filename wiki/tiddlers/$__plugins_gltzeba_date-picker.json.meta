@@ -1,0 +1,9 @@
+author: gltzeba
+dependents: 
+description: date picker
+list: readme
+name: date-picker
+plugin-type: plugin
+title: $:/plugins/gltzeba/date-picker
+type: application/json
+version: 0.0.1

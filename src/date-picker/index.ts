@@ -1,29 +1,64 @@
 import { widget as Widget } from '$:/core/modules/widgets/widget.js';
-import { IChangedTiddlers } from 'tiddlywiki';
+import { IChangedTiddlers, IParseTreeNode, IWidgetInitialiseOptions, Tiddler } from 'tiddlywiki';
 import flatpickr from './flatpickr.min.js';
 
 class DatePickerWidget extends Widget {
+  id: string = "";
+  currentTiddler: Tiddler | undefined;
+  content: string = "";
+  date: Date = new Date();
 
-  showContent : string = "date picker";
+  execute() {
+    if (this.attributes) {
+      this.computeAttributes();
+    }
+    const currentTiddlerTitle = this.getVariable("currentTiddler");
+    this.currentTiddler = $tw.wiki.getTiddler(currentTiddlerTitle);
+    this.id = this.getAttribute("id", this.id);
+
+    if (!this.hasAttribute("id")) {
+      this.content = "未设置id属性";
+      return undefined;
+    }
+
+    if (this.currentTiddler == undefined) {
+      return undefined;
+    }
+
+    if (!this.currentTiddler.hasField(this.id)) {
+      $tw.wiki.addTiddler(new $tw.Tiddler(this.currentTiddler.fields, { [this.id]: new Date(Date.now()).toString() }));
+    }
+
+    this.date = new Date(this.currentTiddler?.getFieldString(this.id) || "");
+    if (isNaN(this.date.getTime())) {
+      this.content = "错误的时间格式";
+      return undefined;
+    }
+
+    this.content = this.date.toString();
+  }
+
 
   refresh(_changedTiddlers: IChangedTiddlers) {
-    return false;
+    this.refreshSelf();
+    return true;
   }
 
   render(parent: Element, nextSibling: Element) {
     this.parentDomNode = parent;
-    this.computeAttributes();
     this.execute();
     const containerElement = $tw.utils.domMaker('span', {
-      text: this.showContent,
+      text: this.content,
     });
     flatpickr(containerElement, {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
+      defaultDate: this.date,
       onChange: (selectedDates: Date[], dateStr: string, instance: any) => {
-        console.log(dateStr);
-        this.showContent = dateStr;
-        this.refreshSelf();
+        console.log(dateStr, selectedDates[0].toString());
+        if (this.currentTiddler) {
+          $tw.wiki.addTiddler(new $tw.Tiddler(this.currentTiddler.fields, { [this.id]: selectedDates[0].toString() }));
+        }
       }
     });
     parent.insertBefore(containerElement, nextSibling);
