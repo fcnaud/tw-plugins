@@ -1,0 +1,29 @@
+.gltzeba-datepicker {
+    position: relative;
+    /* 为了定位伪元素 */
+    background-color: #f0f0f073;
+    /* 背景色 */
+    border-radius: 4px;
+    /* 圆弧形矩形框 */
+    padding: 1px 2px 1px 30px;
+    /* 内边距，确保内容不会紧贴边框 */
+    margin: 1px 2px;
+    /* 外边距，确保元素之间有间隔 */
+}
+
+.gltzeba-datepicker::before {
+    content: '';
+    /* 指定字体图标的字体 */
+    position: absolute;
+    /* 绝对定位 */
+    left: 10px;
+    /* 根据需要调整 */
+    top: 50%;
+    /* 垂直居中 */
+    transform: translateY(-50%);
+    /* 确保图标垂直居中 */
+    font-size: 20px;
+    /* 图标大小 */
+    color: #333;
+    /* 图标颜色 */
+}

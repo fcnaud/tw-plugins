@@ -2,6 +2,7 @@ import { widget as Widget } from '$:/core/modules/widgets/widget.js';
 import { IChangedTiddlers, IParseTreeNode, IWidgetInitialiseOptions, Tiddler } from 'tiddlywiki';
 import flatpickr from './flatpickr.min.js';
 import { DateTime } from './luxon.min.js';
+import './index.css';
 
 class DatePickerWidget extends Widget {
   id: string = "";
@@ -51,6 +52,7 @@ class DatePickerWidget extends Widget {
     this.execute();
     const containerElement = $tw.utils.domMaker('span', {
       text: this.content,
+      class: "gltzeba-datepicker"
     });
     flatpickr(containerElement, {
       enableTime: true,
