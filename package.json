@@ -49,6 +49,7 @@
   "dependencies": {
     "date-fns": "^3.6.0",
     "npm-check-updates": "^16.14.20",
+    "parcel": "^2.12.0",
     "tiddlywiki": "^5.3.4",
     "tiddlywiki-plugin-dev": "^0.2.1"
   }
