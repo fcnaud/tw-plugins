@@ -1,0 +1,7 @@
+created: 20240718073116305
+modified: 20240718073311522
+tags: $:/tags/ViewTemplate/Subtitle
+title: $:/plugins/gltzeba/custom-time-view-template/viewTemplate/subtitle/created
+type: text/vnd.tiddlywiki
+
+创建于 <$view field="created" format="date" template={{$:/language/Tiddler/DateFormat}}/>

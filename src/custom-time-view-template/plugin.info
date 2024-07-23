@@ -1,0 +1,9 @@
+{
+  "title": "$:/plugins/gltzeba/custom-time-view-template",
+  "name": "custom-time-view-template",
+  "author": "gltzeba",
+  "description": "日期显示模板",
+  "plugin-type": "plugin",
+  "version": "0.0.2",
+  "list": "readme"
+}
